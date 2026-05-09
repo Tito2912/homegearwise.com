@@ -1,0 +1,233 @@
+[build]
+  command = "npm run build && node scripts/ping-indexnow.cjs"
+  publish = "out"
+
+[[redirects]]
+  from = "http://www.homegearwise.com/*"
+  to = "https://homegearwise.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://homegearwise.com/*"
+  to = "https://homegearwise.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.homegearwise.com/*"
+  to = "https://homegearwise.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/index.html"
+  to = "/fr/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/index.html"
+  to = "/es/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/index.html"
+  to = "/de/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/robot-vacuum-mop-comparison/index.html"
+  to = "/robot-vacuum-mop-comparison/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/automatic-coffee-machines/index.html"
+  to = "/automatic-coffee-machines/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/airfryers/index.html"
+  to = "/airfryers/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/index.html"
+  to = "/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-clean-and-maintain-robot-vacuum/index.html"
+  to = "/blog/how-to-clean-and-maintain-robot-vacuum/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/legal-notice/index.html"
+  to = "/legal-notice/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy/index.html"
+  to = "/privacy-policy/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/comparatif-aspirateurs-robots/index.html"
+  to = "/fr/comparatif-aspirateurs-robots/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/machines-a-cafe-automatiques/index.html"
+  to = "/fr/machines-a-cafe-automatiques/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/airfryers/index.html"
+  to = "/fr/airfryers/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/blog/index.html"
+  to = "/fr/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/blog/comment-nettoyer-et-entretenir-aspirateur-robot/index.html"
+  to = "/fr/blog/comment-nettoyer-et-entretenir-aspirateur-robot/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/mentions-legales/index.html"
+  to = "/fr/mentions-legales/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/fr/politique-de-confidentialite/index.html"
+  to = "/fr/politique-de-confidentialite/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/comparativa-robots-aspirador/index.html"
+  to = "/es/comparativa-robots-aspirador/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/cafeteras-automaticas/index.html"
+  to = "/es/cafeteras-automaticas/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/freidoras-de-aire/index.html"
+  to = "/es/freidoras-de-aire/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/blog/index.html"
+  to = "/es/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/blog/como-limpiar-y-mantener-robot-aspirador/index.html"
+  to = "/es/blog/como-limpiar-y-mantener-robot-aspirador/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/aviso-legal/index.html"
+  to = "/es/aviso-legal/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/politica-de-privacidad/index.html"
+  to = "/es/politica-de-privacidad/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/saugroboter-vergleich/index.html"
+  to = "/de/saugroboter-vergleich/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/kaffeevollautomaten/index.html"
+  to = "/de/kaffeevollautomaten/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/heissluftfritteusen/index.html"
+  to = "/de/heissluftfritteusen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/blog/index.html"
+  to = "/de/blog/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/blog/saugroboter-reinigen-und-warten/index.html"
+  to = "/de/blog/saugroboter-reinigen-und-warten/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/impressum/index.html"
+  to = "/de/impressum/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/de/datenschutzerklaerung/index.html"
+  to = "/de/datenschutzerklaerung/"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com; frame-src 'self' https://www.youtube-nocookie.com; upgrade-insecure-requests"
+
+[[headers]]
+  for = "/_next/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">HomeGearWise</title>
+  <rect width="64" height="64" rx="12" fill="#111"/>
+  <path d="M15 33 32 18l17 15v18H15V33Z" fill="#fff"/>
+  <path d="M26 51V36h12v15" fill="#f97316"/>
+</svg>

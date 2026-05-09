@@ -1,0 +1,26 @@
+# HomeGearWise.com — LLMs.txt
+#
+# Purpose: help AI assistants/crawlers understand this site and its preferred usage.
+# Contact: contact@homegearwise.com
+#
+# This site publishes editorial comparison guides and maintenance checklists for home & garden products.
+# Some outbound links are affiliate links (Amazon Associate).
+#
+# Preferred attribution when quoting:
+# - “HomeGearWise.com” + the page URL
+#
+# Languages
+# - English: /
+# - Français: /fr/
+# - Español: /es/
+# - Deutsch: /de/
+#
+# Key sections
+# - Robot vacuums & mops: /robot-vacuum-mop-comparison/ (and translations)
+# - Automatic coffee machines: /automatic-coffee-machines/ (and translations)
+# - Airfryers: /airfryers/ (and translations)
+# - Blog: /blog/ (and translations)
+#
+# Policies
+# - Legal notice: /legal-notice/
+# - Privacy policy: /privacy-policy/
