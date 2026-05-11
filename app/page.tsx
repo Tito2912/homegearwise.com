@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllDocMetas, getDocMetaByRouteSegments, getPostByRouteSegments } from '@/lib/content';
 import { buildBreadcrumbJsonLd, buildPrimaryEntityJsonLd } from '@/lib/schema';
 import { buildAlternates, getOpenGraphImage, getOpenGraphType, parseRobots } from '@/lib/seo';
+import { SITE } from '@/lib/site';
 
 export async function generateMetadata(): Promise<Metadata> {
   const meta = await getDocMetaByRouteSegments([]);
@@ -18,18 +19,19 @@ export async function generateMetadata(): Promise<Metadata> {
     description: meta.description,
     alternates: buildAlternates(meta, all),
     robots: parseRobots(meta.robots),
+    ...(meta.type === 'article' && { authors: [{ name: SITE.brandName, url: SITE.baseUrl }] }),
     openGraph: {
       type: getOpenGraphType(meta),
       title: meta.title,
       description: meta.description,
       url: canonical,
-      images: [{ url: ogImage }],
+      images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      images: [ogImage],
+      images: [ogImage.url],
     },
   };
 }

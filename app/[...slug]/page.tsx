@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllDocMetas, getAllStaticParams, getDocMetaByRouteSegments, getPostByRouteSegments } from '@/lib/content';
-import { buildBreadcrumbJsonLd, buildPrimaryEntityJsonLd } from '@/lib/schema';
+import { buildBreadcrumbJsonLd, buildItemListJsonLd, buildPrimaryEntityJsonLd } from '@/lib/schema';
 import { buildAlternates, getOpenGraphImage, getOpenGraphType, parseRobots } from '@/lib/seo';
+import { SITE } from '@/lib/site';
 
 export async function generateStaticParams() {
   const all = await getAllStaticParams();
@@ -24,18 +25,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: meta.description,
     alternates: buildAlternates(meta, all),
     robots: parseRobots(meta.robots),
+    ...(meta.type === 'article' && { authors: [{ name: SITE.brandName, url: SITE.baseUrl }] }),
     openGraph: {
       type: getOpenGraphType(meta),
       title: meta.title,
       description: meta.description,
       url: canonical,
-      images: [{ url: ogImage }],
+      images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
-      images: [ogImage],
+      images: [ogImage.url],
     },
   };
 }
@@ -47,11 +49,15 @@ export default async function CatchAllPage({ params }: { params: Promise<{ slug:
 
   const primaryJsonLd = buildPrimaryEntityJsonLd(post);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(post);
+  const itemListJsonLd = buildItemListJsonLd(post);
 
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(primaryJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {itemListJsonLd ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }} />
+      ) : null}
       {post.faq?.length ? (
         <script
           type="application/ld+json"

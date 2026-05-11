@@ -1,5 +1,5 @@
 (function () {
-  var GA4_ID = 'G-W6JW3C08M3';
+  var GA4_ID = 'G-8HEW34FCM7';
   var CONSENT_KEY = 'hpl_consent_v1';
 
   function getLangFromPathname(pathname) {
@@ -14,6 +14,8 @@
     var lang = getLangFromPathname(window.location.pathname);
     var COPY = {
       en: {
+        openFullSize: 'Open full size',
+        photoN: 'Photo {n}',
         manageCookies: 'Manage cookies',
         cookieAria: 'Cookie consent',
         cookieTitle: 'Cookies',
@@ -39,6 +41,8 @@
         videoPlaceholderCta: 'Load video',
       },
       fr: {
+        openFullSize: 'Ouvrir en plein écran',
+        photoN: 'Photo {n}',
         manageCookies: 'Gérer les cookies',
         cookieAria: 'Consentement cookies',
         cookieTitle: 'Cookies',
@@ -64,6 +68,8 @@
         videoPlaceholderCta: 'Charger la vidéo',
       },
       es: {
+        openFullSize: 'Abrir a tamaño completo',
+        photoN: 'Foto {n}',
         manageCookies: 'Gestionar cookies',
         cookieAria: 'Consentimiento de cookies',
         cookieTitle: 'Cookies',
@@ -89,6 +95,8 @@
         videoPlaceholderCta: 'Cargar vídeo',
       },
       de: {
+        openFullSize: 'In voller Größe öffnen',
+        photoN: 'Foto {n}',
         manageCookies: 'Cookies verwalten',
         cookieAria: 'Cookie-Einwilligung',
         cookieTitle: 'Cookies',
@@ -118,23 +126,42 @@
     return COPY[lang] || COPY.en;
   }
 
-  function readConsent() {
+  function readConsentCookie() {
     try {
-      var raw = localStorage.getItem(CONSENT_KEY);
-      if (!raw) return null;
-      var parsed = JSON.parse(raw);
+      var match = document.cookie.match('(?:^|;)\\s*' + CONSENT_KEY + '=([^;]+)');
+      if (!match) return null;
+      var parsed = JSON.parse(decodeURIComponent(match[1]));
       return { analytics: !!parsed.analytics, externalMedia: !!parsed.externalMedia };
     } catch {
       return null;
     }
   }
 
-  function writeConsent(next) {
+  function readConsent() {
     try {
-      localStorage.setItem(
-        CONSENT_KEY,
-        JSON.stringify({ analytics: !!next.analytics, externalMedia: !!next.externalMedia, ts: Date.now() })
-      );
+      var raw = localStorage.getItem(CONSENT_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        return { analytics: !!parsed.analytics, externalMedia: !!parsed.externalMedia };
+      }
+    } catch {
+      // ignore
+    }
+    // Fallback to cookie (Safari ITP clears localStorage after 7 days without interaction)
+    return readConsentCookie();
+  }
+
+  function writeConsent(next) {
+    var payload = { analytics: !!next.analytics, externalMedia: !!next.externalMedia, ts: Date.now() };
+    var encoded = encodeURIComponent(JSON.stringify(payload));
+    try {
+      localStorage.setItem(CONSENT_KEY, JSON.stringify(payload));
+    } catch {
+      // ignore
+    }
+    try {
+      // Write a first-party cookie as fallback; max-age = 1 year
+      document.cookie = CONSENT_KEY + '=' + encoded + '; max-age=31536000; path=/; SameSite=Strict; Secure';
     } catch {
       // ignore
     }
@@ -622,7 +649,7 @@
     var mainBtn = document.createElement('button');
     mainBtn.type = 'button';
     mainBtn.className = 'gallery-main';
-    mainBtn.setAttribute('aria-label', 'Open full size');
+    mainBtn.setAttribute('aria-label', getCopy().openFullSize);
 
     var mainImg = document.createElement('img');
     mainImg.decoding = 'async';
@@ -684,7 +711,7 @@
         var b = document.createElement('button');
         b.type = 'button';
         b.className = 'gallery-thumb';
-        b.setAttribute('aria-label', 'Photo ' + String(n));
+        b.setAttribute('aria-label', getCopy().photoN.replace('{n}', String(n)));
         b.setAttribute('aria-pressed', n === initialIndex ? 'true' : 'false');
 
         var img = document.createElement('img');

@@ -39,6 +39,9 @@ export function buildOrganizationJsonLd() {
     logo: {
       '@type': 'ImageObject',
       url: new URL('/images/homegearwise-logo.svg', BASE_URL).toString(),
+      contentUrl: new URL('/images/homegearwise-logo.svg', BASE_URL).toString(),
+      width: 512,
+      height: 512,
     },
   };
 }
@@ -51,6 +54,14 @@ export function buildWebSiteJsonLd() {
     name: SITE.brandName,
     url: BASE_URL,
     publisher: { '@id': ORG_ID },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${BASE_URL}/blog/?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
 }
 
@@ -163,6 +174,43 @@ function inferParentCrumb(post: Post, lang: ReturnType<typeof normalizeLang>): C
   if (internal.has(blog)) return { name: ui.blog, path: blogIndexPath(lang) };
 
   return null;
+}
+
+const COMPARISON_PRODUCTS: Record<string, { name: string; brand: string; image: string; url: string }[]> = {
+  robot_vacuum_mop: [
+    { name: 'iRobot Roomba Plus 405 Combo robot + AutoWash dock', brand: 'iRobot', image: '/images/irobotroombaplus405-4.jpg', url: 'https://amzn.to/4qLSUiR' },
+    { name: 'Shark PowerDetect 2-in-1 Robot Vacuum and Mop (NeverTouch Pro Base)', brand: 'Shark', image: '/images/sharkrobotvacuum-7.jpg', url: 'https://amzn.to/3LI7Cby' },
+    { name: 'Roborock Qrevo 35A Robot Vacuum and Mop', brand: 'Roborock', image: '/images/roborock-qv-35a-6.jpg', url: 'https://amzn.to/roborock' },
+  ],
+};
+
+export function buildItemListJsonLd(post: Post) {
+  const key = post.translationKey;
+  const products = key ? COMPARISON_PRODUCTS[key] : undefined;
+  if (!products?.length) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: post.title,
+    numberOfItems: products.length,
+    itemListElement: products.map((p, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      item: {
+        '@type': 'Product',
+        name: p.name,
+        brand: { '@type': 'Brand', name: p.brand },
+        image: new URL(p.image, BASE_URL).toString(),
+        offers: {
+          '@type': 'Offer',
+          url: p.url,
+          availability: 'https://schema.org/InStock',
+          priceCurrency: 'USD',
+        },
+      },
+    })),
+  };
 }
 
 export function buildBreadcrumbJsonLd(post: Post) {

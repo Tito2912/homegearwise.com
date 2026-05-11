@@ -22,7 +22,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   manifest: '/site.webmanifest',
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },
   openGraph: {
     type: 'website',
@@ -49,10 +54,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body>
         <LangHtmlUpdater />
+        <a href="#main-content" className="skip-to-content">Skip to content</a>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <SiteHeader />
-        <main className="container">{children}</main>
+        <main id="main-content" className="container">{children}</main>
         <SiteFooter />
         <Script src="/site.js" strategy="afterInteractive" />
       </body>

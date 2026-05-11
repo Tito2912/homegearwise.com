@@ -14,6 +14,10 @@ export function buildAlternates(meta: DocMeta, all: DocMeta[]): Metadata['altern
   const canonical = meta.canonical ?? meta.routePath;
 
   if (!meta.translationKey) {
+    // EN-only pages: emit self-referencing hreflang so Google knows the target audience.
+    if (meta.lang === 'en' || !meta.lang) {
+      return { canonical, languages: { en: canonical, 'x-default': canonical } };
+    }
     return { canonical };
   }
 
@@ -39,17 +43,29 @@ export function getOpenGraphType(meta: DocMeta): 'website' | 'article' {
   return meta.type === 'article' ? 'article' : 'website';
 }
 
-export function getOpenGraphImage(meta: DocMeta): string {
-  if (!meta.translationKey) return '/images/roborock-qv-35a-6.jpg';
+type OgImage = { url: string; width: number; height: number; alt: string };
 
-  if (meta.translationKey === 'home' || meta.translationKey === 'blog_index') {
-    return '/images/roborock-qv-35a-6.jpg';
+export function getOpenGraphImage(meta: DocMeta): OgImage {
+  const defaults: OgImage = {
+    url: '/images/roborock-qv-35a-6.jpg',
+    width: 600,
+    height: 600,
+    alt: 'Roborock QV 35A robot vacuum and mop',
+  };
+
+  if (!meta.translationKey) return defaults;
+  if (meta.translationKey === 'home' || meta.translationKey === 'blog_index') return defaults;
+  if (meta.translationKey === 'robot_vacuum_mop') return defaults;
+
+  if (meta.translationKey === 'automatic_coffee_machines') {
+    return { url: '/images/machines-cafe-auto/delonghi-1.jpg', width: 600, height: 600, alt: 'De\'Longhi automatic coffee machine' };
+  }
+  if (meta.translationKey === 'airfryers') {
+    return { url: '/images/airfryers/ninjadoublestack-1.jpg', width: 600, height: 600, alt: 'Ninja Double Stack air fryer' };
+  }
+  if (meta.translationKey === 'blog_robot_maintenance') {
+    return { url: '/images/sharkrobotvacuum-7.jpg', width: 600, height: 600, alt: 'Shark robot vacuum and mop' };
   }
 
-  if (meta.translationKey === 'robot_vacuum_mop') return '/images/roborock-qv-35a-6.jpg';
-  if (meta.translationKey === 'automatic_coffee_machines') return '/images/machines-cafe-auto/delonghi-1.jpg';
-  if (meta.translationKey === 'airfryers') return '/images/airfryers/ninjadoublestack-1.jpg';
-  if (meta.translationKey === 'blog_robot_maintenance') return '/images/sharkrobotvacuum-7.jpg';
-
-  return '/images/roborock-qv-35a-6.jpg';
+  return defaults;
 }

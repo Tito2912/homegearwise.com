@@ -75,6 +75,24 @@
   force = true
 
 [[redirects]]
+  from = "/blog/roomba-plus-405-combo-review/index.html"
+  to = "/blog/roomba-plus-405-combo-review/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/robot-vacuum-mop-buying-guide/index.html"
+  to = "/blog/robot-vacuum-mop-buying-guide/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/robot-vacuum-mop-for-pets/index.html"
+  to = "/blog/robot-vacuum-mop-for-pets/"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/legal-notice/index.html"
   to = "/legal-notice/"
   status = 301
@@ -220,7 +238,12 @@
     X-Frame-Options = "SAMEORIGIN"
     Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com; frame-src 'self' https://www.youtube-nocookie.com; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com; frame-src 'self' https://www.youtube-nocookie.com; upgrade-insecure-requests"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/_next/*"
