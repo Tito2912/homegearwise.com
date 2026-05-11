@@ -4,6 +4,7 @@ prompt.docx
 node_modules/
 .next/
 out/
+.image-cache.json
 
 # Logs
 npm-debug.log*

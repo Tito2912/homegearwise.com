@@ -19,7 +19,10 @@ export const metadata: Metadata = {
   description:
     'Premium-style, practical guides for home cleaning, storage, kitchen and garden—plus robot vacuum & mop comparisons and maintenance tips.',
   metadataBase: new URL(SITE.baseUrl),
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    types: { 'application/rss+xml': `${SITE.baseUrl}/rss.xml` },
+  },
   manifest: '/site.webmanifest',
   icons: {
     icon: [

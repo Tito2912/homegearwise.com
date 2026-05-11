@@ -5,6 +5,7 @@ import { compileMDX } from 'next-mdx-remote/rsc';
 import type { Post, PostType } from '@/lib/types';
 import type { TocHeading } from '@/components/TableOfContents';
 import { SITE } from '@/lib/site';
+import { MdxImg } from '@/components/MdxImg';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
@@ -349,6 +350,7 @@ export async function getPostByRouteSegments(segments: string[]): Promise<Post |
         rehypePlugins: [rehypeAddHeadingIds],
       },
     },
+    components: { img: MdxImg },
   });
 
   const slug = segments.join('/');

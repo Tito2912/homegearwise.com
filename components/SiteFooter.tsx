@@ -23,7 +23,7 @@ export function SiteFooter() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        © {new Date().getFullYear()} — {SITE.brandName} · <Link href={aboutPath(lang)}>{t.about}</Link> ·{' '}
+        <span suppressHydrationWarning>© {new Date().getFullYear()}</span> — {SITE.brandName} · <Link href={aboutPath(lang)}>{t.about}</Link> ·{' '}
         <Link href={methodologyPath(lang)}>{t.methodology}</Link> · <Link href={sourcesPath(lang)}>{t.sources}</Link> ·{' '}
         <Link href={contactPath(lang)}>{t.contact}</Link> · <Link href={blogIndexPath(lang)}>{t.blog}</Link> ·{' '}
         <Link href={legalNoticePath(lang)}>{t.legal}</Link> · <Link href={privacyPath(lang)}>{t.privacy}</Link> ·{' '}

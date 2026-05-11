@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { LanguageSelect } from '@/components/LanguageSelect';
 import { airfryersPath, blogIndexPath, coffeeMachinesPath, getLangFromPathname, homePath, robotVacuumPath, SITE, UI_TRANSLATIONS } from '@/lib/site';
@@ -9,6 +10,7 @@ export function SiteHeader() {
   const pathname = usePathname() ?? '/';
   const lang = getLangFromPathname(pathname);
   const t = UI_TRANSLATIONS[lang];
+  const [open, setOpen] = useState(false);
 
   return (
     <header className="header">
@@ -17,11 +19,21 @@ export function SiteHeader() {
           <img alt={SITE.brandName} decoding="async" fetchPriority="high" height={34} src="/images/homegearwise-logo.svg" width={188} />
         </Link>
 
-        <nav aria-label={t.primaryNavLabel} className="nav">
-          <Link href={robotVacuumPath(lang)}>{t.robotVacuums}</Link>
-          <Link href={coffeeMachinesPath(lang)}>{t.coffeeMachines}</Link>
-          <Link href={airfryersPath(lang)}>{t.airfryers}</Link>
-          <Link href={blogIndexPath(lang)}>{t.blog}</Link>
+        <button
+          aria-controls="primary-nav"
+          aria-expanded={open}
+          aria-label={open ? t.closeMenu : t.openMenu}
+          className="nav-toggle"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span aria-hidden="true">{open ? '✕' : '☰'}</span>
+        </button>
+
+        <nav aria-label={t.primaryNavLabel} className={`nav${open ? ' nav--open' : ''}`} id="primary-nav">
+          <Link href={robotVacuumPath(lang)} onClick={() => setOpen(false)}>{t.robotVacuums}</Link>
+          <Link href={coffeeMachinesPath(lang)} onClick={() => setOpen(false)}>{t.coffeeMachines}</Link>
+          <Link href={airfryersPath(lang)} onClick={() => setOpen(false)}>{t.airfryers}</Link>
+          <Link href={blogIndexPath(lang)} onClick={() => setOpen(false)}>{t.blog}</Link>
           <LanguageSelect />
         </nav>
       </div>

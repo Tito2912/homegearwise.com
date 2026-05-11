@@ -4,6 +4,7 @@ import { getAllDocMetas, getAllStaticParams, getDocMetaByRouteSegments, getPostB
 import { buildBreadcrumbJsonLd, buildItemListJsonLd, buildPrimaryEntityJsonLd } from '@/lib/schema';
 import { buildAlternates, getOpenGraphImage, getOpenGraphType, parseRobots } from '@/lib/seo';
 import { SITE } from '@/lib/site';
+import { ShareButtons } from '@/components/ShareButtons';
 
 export async function generateStaticParams() {
   const all = await getAllStaticParams();
@@ -76,6 +77,13 @@ export default async function CatchAllPage({ params }: { params: Promise<{ slug:
       ) : null}
 
       {post.content}
+      {post.type === 'article' && (
+        <ShareButtons
+          title={post.title}
+          url={`${SITE.baseUrl}${post.canonical ?? `/${post.slug}/`}`}
+          label="Share this article"
+        />
+      )}
     </>
   );
 }
