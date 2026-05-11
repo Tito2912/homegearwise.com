@@ -52,9 +52,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      </head>
       <body>
         <LangHtmlUpdater />
         <a href="#main-content" className="skip-to-content">Skip to content</a>
+        {/* GA4 Consent Mode v2 — must run before gtag.js to set denied defaults */}
+        <Script
+          id="ga4-consent-defaults"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});gtag('js',new Date());gtag('config','G-8HEW34FCM7');` }}
+        />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-8HEW34FCM7" strategy="afterInteractive" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }} />
         <SiteHeader />

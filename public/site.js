@@ -1,5 +1,5 @@
 (function () {
-  var GA4_ID = 'G-8HEW34FCM7';
+  var GA4_ID = 'G-8HEW34FCM7'; // kept for affiliate event calls only — script loaded via layout.tsx
   var CONSENT_KEY = 'hpl_consent_v1';
 
   function getLangFromPathname(pathname) {
@@ -167,21 +167,11 @@
     }
   }
 
-  function ensureGa4Loaded() {
-    if (window.__hpl_ga4_loaded) return;
-    window.__hpl_ga4_loaded = true;
-
-    var ext = document.createElement('script');
-    ext.async = true;
-    ext.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA4_ID);
-    document.head.appendChild(ext);
-
-    var inline = document.createElement('script');
-    inline.text =
-      "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','" +
-      GA4_ID +
-      "',{anonymize_ip:true});";
-    document.head.appendChild(inline);
+  function updateGa4Consent(granted) {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('consent', 'update', {
+      analytics_storage: granted ? 'granted' : 'denied',
+    });
   }
 
   function safeText(input, maxLen) {
@@ -257,7 +247,6 @@
           var consent = readConsent();
           if (!consent || !consent.analytics) return;
 
-          ensureGa4Loaded();
           if (typeof window.gtag !== 'function') return;
 
           var href = a.getAttribute('href') || '';
@@ -545,7 +534,7 @@
 
   function applyConsent(consent) {
     var copy = getCopy();
-    if (consent && consent.analytics) ensureGa4Loaded();
+    updateGa4Consent(!!(consent && consent.analytics));
     enhanceYouTubeEmbeds(consent || { analytics: false, externalMedia: false }, copy);
   }
 
